@@ -17,6 +17,10 @@
 /storage/*
 !/storage/.keep
 
+# Ignore seedData Folder
+/db/data/*
+!/db/data/.keep
+
 .byebug_history
 
 # Ignore master key for decrypting credentials and more.

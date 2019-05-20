@@ -1,8 +1,11 @@
 class SongsController < ApplicationController
 
   def create
-    song = Song.create(song_params)
-    song.file.attach(song_params[:file])
+    song_number = (params.keys.length - 2)/3
+
+    song_number.times { |index|
+      Song.create(name: params[("title" + index.to_s).to_sym], artist: params[("artist" + index.to_s).to_sym]).file.attach(params[("file" + index.to_s).to_sym])
+    }
   end
 
   def show
@@ -14,15 +17,11 @@ class SongsController < ApplicationController
   end
 
   def index
+    songs = []
     Song.all.each do |song|
-      render json: {song: song, audio: rails_blob_url(song.file)}
+      songs << {song: song, audio: rails_blob_url(song.file)}
     end
+    render json: songs
   end
 
-
-  private
-
-  def song_params
-    params.permit(:name, :artist, :file)
-  end
 end
