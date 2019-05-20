@@ -1,0 +1,2 @@
+class Audiobook < ApplicationRecord
+end

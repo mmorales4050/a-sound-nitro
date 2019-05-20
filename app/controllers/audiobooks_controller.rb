@@ -1,0 +1,2 @@
+class AudiobooksController < ApplicationController
+end
