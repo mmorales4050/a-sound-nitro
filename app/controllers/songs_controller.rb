@@ -4,7 +4,7 @@ class SongsController < ApplicationController
     song_number = (params.keys.length - 2)/3
 
     song_number.times { |index|
-      Song.create(name: params[("title" + index.to_s).to_sym], artist: params[("artist" + index.to_s).to_sym]).file.attach(params[("file" + index.to_s).to_sym])
+      song = Song.create(name: params[("title" + index.to_s).to_sym], artist: params[("artist" + index.to_s).to_sym]).file.attach(params[("file" + index.to_s).to_sym])
     }
   end
 
