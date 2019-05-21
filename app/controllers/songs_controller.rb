@@ -1,4 +1,9 @@
 class SongsController < ApplicationController
+  require 'open-uri'
+  require 'stringio'
+  require 'net/http'
+  require 'uri'
+  require 'mp3info'
 
   def create
     song_number = (params.keys.length - 2)/3
@@ -19,7 +24,7 @@ class SongsController < ApplicationController
   def index
     songs = []
     Song.all.each do |song|
-      songs << {song: song, audio: rails_blob_url(song.file)}
+      songs << {song: song, audio: rails_blob_url(song.file), info: "child"}
     end
     render json: songs
   end
