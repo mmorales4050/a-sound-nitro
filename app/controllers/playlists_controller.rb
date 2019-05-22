@@ -1,6 +1,4 @@
 class PlaylistsController < ApplicationController
-  # has_many :songs
-  # has_many :songs, through: :playlist_songs
 
   def create
     playlist_name = params[:name]
