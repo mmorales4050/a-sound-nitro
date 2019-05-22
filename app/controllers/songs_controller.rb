@@ -1,9 +1,6 @@
 class SongsController < ApplicationController
-  require 'open-uri'
-  require 'stringio'
-  require 'net/http'
-  require 'uri'
-  require 'mp3info'
+  # has_many :playlists
+  # has_many :playlists, through: :playlist_songs
 
   def create
     song_number = (params.keys.length - 2)/3
