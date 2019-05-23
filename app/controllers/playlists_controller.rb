@@ -6,7 +6,14 @@ class PlaylistsController < ApplicationController
   end
 
   def index
-    render json: Playlist.all
+    user = User.find(1)
+    render json: playlists_object(user)
+  end
+
+  def playlists_object(user)
+    user.playlists.map do |playlist|
+      {name: playlist.name, songs: playlist.songs}
+    end
   end
 
   def update
