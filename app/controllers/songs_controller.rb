@@ -6,7 +6,7 @@ class SongsController < ApplicationController
     song_number = (params.keys.length - 2)/3
 
     song_number.times { |index|
-      song = Song.create(name: params[("title" + index.to_s).to_sym], artist: params[("artist" + index.to_s).to_sym]).file.attach(params[("file" + index.to_s).to_sym])
+      song = Song.create(name: params[("title" + index.to_s).to_sym], artist: params[("artist" + index.to_s).to_sym], index: params[("index" + index.to_s).to_sym]).file.attach(params[("file" + index.to_s).to_sym])
     }
   end
 
@@ -20,7 +20,7 @@ class SongsController < ApplicationController
 
   def song_object
     Song.all.map do |song|
-      {id: song.id, name: song.name, artist: song.artist, url: rails_blob_url(song.file)}
+      {id: song.id, index: song.index, name: song.name, artist: song.artist, url: rails_blob_url(song.file)}
     end
   end
 
