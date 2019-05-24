@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 2019_05_22_192102) do
   create_table "playlist_songs", force: :cascade do |t|
     t.integer "playlist_id"
     t.integer "song_id"
+    t.integer "index"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -62,6 +63,7 @@ ActiveRecord::Schema.define(version: 2019_05_22_192102) do
   create_table "songs", force: :cascade do |t|
     t.string "name"
     t.string "artist"
+    t.integer "index"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

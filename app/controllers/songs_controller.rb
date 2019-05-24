@@ -14,16 +14,18 @@ class SongsController < ApplicationController
     song = Song.find_by(id: params[:id])
 
     if song.file.attached?
-      render json: {song: song, audio: rails_blob_url(song.file)}
+      render json: {id: song.id, song: song, audio: rails_blob_url(song.file)}
+    end
+  end
+
+  def song_object
+    Song.all.map do |song|
+      {id: song.id, name: song.name, artist: song.artist, url: rails_blob_url(song.file)}
     end
   end
 
   def index
-    songs = []
-    Song.all.each do |song|
-      songs << {song: song, audio: rails_blob_url(song.file), info: "child"}
-    end
-    render json: songs
+    render json: song_object
   end
 
 end

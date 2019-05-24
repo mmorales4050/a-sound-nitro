@@ -3,7 +3,7 @@ class CreatePlaylistSongs < ActiveRecord::Migration[5.2]
     create_table :playlist_songs do |t|
       t.integer :playlist_id
       t.integer :song_id
-
+      t.integer :index
       t.timestamps
     end
   end

@@ -12,7 +12,9 @@ class PlaylistsController < ApplicationController
 
   def playlists_object(user)
     user.playlists.map do |playlist|
-      {name: playlist.name, songs: playlist.songs}
+      {id: playlist.id, name: playlist.name, songs: playlist.songs.map do |song|
+        {name: song.name, artist: song.artist, url: rails_blob_url(song.file)}
+      end}
     end
   end
 
