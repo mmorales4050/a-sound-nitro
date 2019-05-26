@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(version: 2019_05_22_192102) do
     t.string "name"
     t.string "artist"
     t.integer "index"
+    t.float "duration"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
