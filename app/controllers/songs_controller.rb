@@ -3,28 +3,32 @@ class SongsController < ApplicationController
   # has_many :playlists, through: :playlist_songs
 
   def create
-    songs = []
-    song_number = (params.keys.length - 2)/3
+    song = Song.new name: params[:title], artist: params[:artist], index: params[:index]
 
-    song_number.times { |index|
-      song = Song.create(name: params[("title" + index.to_s).to_sym], artist: params[("artist" + index.to_s).to_sym], index: params[("index" + index.to_s).to_sym])
+    song.file.attach params[:file]
 
-      while song.file.attached? == false
-        song.file.attach(params[("file" + index.to_s).to_sym])
-      end
-      song_copy = {id: song.id, name: song.name, artist: song.artist, duration: song.duration, url: rails_blob_url(song.file), index: song.index}
+    song.save
 
-      songs.push(song_copy)
-    }
-    render json: songs
+    song_copy = {id: song.id, index: song.index, name: song.name, artist: song.artist, duration: song.duration, url: rails_blob_url(song.file)}
+
+    render json: song_copy
+    # songs = []
+    # song_number = (params.keys.length - 2)/3
+    #
+    # song_number.times { |index|
+    #   song = Song.create(name: params[("title" + index.to_s).to_sym], artist: params[("artist" + index.to_s).to_sym], index: params[("index" + index.to_s).to_sym])
+    #
+    #   song.file.attach(params[("file" + index.to_s).to_sym])
+    #
+    #   song_copy = {id: song.id, url: rails_blob_url(song.file)}
+    #
+    #   songs = songs.push(song_copy)
+    #   byebug
+    # }
+    # render json: songs
   end
 
   def show
-    song = Song.find_by(id: params[:id])
-
-    if song.file.attached?
-      render json: {id: song.id, song: song, audio: rails_blob_url(song.file)}
-    end
   end
 
   def update
