@@ -19,7 +19,7 @@ User.create()
   response = RestClient.get("https://api.pexels.com/v1/search?query=music&per_page=80&page=#{index}", headers={"Authorization": api_key()})
   response = JSON.parse(response)
   response["photos"].each do |photo|
-    Image.create(url: photo["url"])
+    Image.create(url: photo["src"]["large"])
   end
 end
 

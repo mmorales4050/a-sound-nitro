@@ -55,7 +55,6 @@ ActiveRecord::Schema.define(version: 2019_05_29_141202) do
     t.integer "playlist_id"
     t.integer "song_id"
     t.integer "index"
-    t.integer "image_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -63,6 +62,7 @@ ActiveRecord::Schema.define(version: 2019_05_29_141202) do
   create_table "playlists", force: :cascade do |t|
     t.string "name"
     t.integer "user_id"
+    t.integer "image_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

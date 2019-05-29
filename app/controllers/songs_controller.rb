@@ -6,9 +6,9 @@ class SongsController < ApplicationController
     image = nil
     while image == nil
       index = rand(Image.all.length - 1)
-      if Image.all[index].song == nil
+      if Image.all[index].song == nil && Image.all[index].playlist == nil
         image = Image.all[index]
-      elsif Image.all[index].song.user.id != 0
+      elsif Image.all[index].song.user.id != 0 && Image.all[index].playlist.user.id != 0
            image = Image.all[index]
       end
     end
@@ -45,7 +45,7 @@ class SongsController < ApplicationController
     # Used to add duration of song after creation
     song = Song.find_by(id: params[:id])
     song.update(duration: params[:duration])
-    render json: song
+    render json: {id: song.id, index: song.index, name: song.name, artist: song.artist, duration: song.duration, url: rails_blob_url(song.file), image: song.image.url}
   end
 
   def song_object
