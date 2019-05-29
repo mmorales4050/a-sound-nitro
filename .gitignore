@@ -20,7 +20,8 @@
 # Ignore seedData Folder
 /db/data/*
 !/db/data/.keep
-
+/secrets/*
+!/secrets/.keep
 .byebug_history
 
 # Ignore master key for decrypting credentials and more.

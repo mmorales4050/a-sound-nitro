@@ -3,13 +3,23 @@ class SongsController < ApplicationController
   # has_many :playlists, through: :playlist_songs
 
   def create
-    song = Song.new name: params[:title], artist: params[:artist], index: params[:index]
+    image = nil
+    while image == nil
+      index = rand(Image.all.length - 1)
+      if Image.all[index].song == nil
+        image = Image.all[index]
+      elsif Image.all[index].song.user.id != 0
+           image = Image.all[index]
+      end
+    end
+
+    song = Song.new name: params[:title], artist: params[:artist], index: params[:index], user_id: 0, image_id: image.id
 
     song.file.attach params[:file]
 
     song.save
 
-    song_copy = {id: song.id, index: song.index, name: song.name, artist: song.artist, duration: song.duration, url: rails_blob_url(song.file)}
+    song_copy = {id: song.id, index: song.index, name: song.name, artist: song.artist, duration: song.duration, url: rails_blob_url(song.file), image: song.image.url}
 
     render json: song_copy
     # songs = []
@@ -42,7 +52,7 @@ class SongsController < ApplicationController
     songs = []
     Song.all.each do |song|
       if song.file.attached?
-        songs << {id: song.id, index: song.index, name: song.name, artist: song.artist, duration: song.duration, url: rails_blob_url(song.file)}
+        songs << {id: song.id, index: song.index, name: song.name, artist: song.artist, duration: song.duration, url: rails_blob_url(song.file), image: song.image.url}
       end
     end
     songs

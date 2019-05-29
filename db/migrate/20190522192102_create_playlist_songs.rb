@@ -4,6 +4,7 @@ class CreatePlaylistSongs < ActiveRecord::Migration[5.2]
       t.integer :playlist_id
       t.integer :song_id
       t.integer :index
+      t.integer :image_id
       t.timestamps
     end
   end
