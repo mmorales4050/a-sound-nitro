@@ -14,24 +14,21 @@ class PlaylistsController < ApplicationController
     playlist_name = params[:name]
     playlist = Playlist.create(name: playlist_name, user_id: 1, image_id: image.id)
 
-    render json: playlist
+    render json: playlist_object(playlist)
   end
 
   def index
     user = User.find(1)
-    render json: playlists_object(user)
-  end
-
-  def playlists_object(user)
-    user.playlists.map do |playlist|
-      {id: playlist.id, image: playlist.image.url, name: playlist.name, songs: playlist.songs.map do |song|
-        {name: song.name, artist: song.artist, duration: song.duration, url: rails_blob_url(song.file), image: song.image.url}
-      end
-    }
+    playlists = user.playlists.map do |playlist|
+      playlist_object(playlist)
     end
+    render json: playlists
   end
 
-  def update
-
+  def playlist_object(playlist)
+    {id: playlist.id, image: playlist.image.url, name: playlist.name, songs: playlist.songs.map do |song|
+      {index: song.index, id: song.id, name: song.name, artist: song.artist, duration: song.duration, url: rails_blob_url(song.file), image: song.image.url}
+    end
+    }
   end
 end
