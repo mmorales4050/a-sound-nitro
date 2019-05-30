@@ -17,6 +17,16 @@ class PlaylistsController < ApplicationController
     render json: playlist_object(playlist)
   end
 
+  def destroy
+    playlist = Playlist.find_by(id: params[:id])
+    PlaylistSong.all.each do |item|
+      if item.playlist_id == params[:id].to_i
+        item.destroy
+      end
+    end
+    playlist.destroy
+  end
+
   def index
     user = User.find(1)
     playlists = user.playlists.map do |playlist|
@@ -27,7 +37,7 @@ class PlaylistsController < ApplicationController
 
   def playlist_object(playlist)
     {id: playlist.id, image: playlist.image.url, name: playlist.name, songs: playlist.songs.map do |song|
-      {index: song.index, id: song.id, name: song.name, artist: song.artist, duration: song.duration, url: rails_blob_url(song.file), image: song.image.url}
+      {index: song.index, id: song.id, name: song.name, artist: song.artist, duration: song.duration, url: rails_blob_url(song.file), image: song.image.url, playlistSongId: PlaylistSong.all.find_by(playlist_id: playlist.id, song_id: song.id).id}
     end
     }
   end

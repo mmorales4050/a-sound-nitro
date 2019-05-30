@@ -38,7 +38,17 @@ class SongsController < ApplicationController
     # render json: songs
   end
 
-  def show
+  def destroy
+    song = Song.find_by(id: params[:id])
+    playlist_song_ids = []
+    PlaylistSong.all.each do |item|
+      if item.song_id == params[:id].to_i
+        playlist_song_ids << item.playlist_id
+        item.destroy
+      end
+    end
+    song.destroy
+    render json: playlist_song_ids
   end
 
   def update
