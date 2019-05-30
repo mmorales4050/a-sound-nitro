@@ -17,6 +17,16 @@ class PlaylistsController < ApplicationController
     render json: playlist_object(playlist)
   end
 
+  def destroy
+    playlist = Playlist.find_by(id: params[:id])
+    PlaylistSong.all.each do |item|
+      if item.playlist_id == params[:id].to_i
+        item.destroy
+      end
+    end
+    playlist.destroy
+  end
+
   def index
     user = User.find(1)
     playlists = user.playlists.map do |playlist|
